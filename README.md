@@ -37,8 +37,9 @@ MAX_DISP_M: Maximum expected displacement in meters (used to size the search win
 GRID_SPACING_M: Your desired output resolution (e.g., 4.0 for a 4-meter grid).  
 MIN_AZIMUTH & MAX_AZIMUTH: Limits valid results to a specific flow direction wedge (use 0 and 360 for no limit).  
 RATE_UNIT: Set to "m/year" or "m/day".  
-Save the script and run it from your activated Anaconda Prompt:  
-```C: (change to the drive with the script)
+Save the script, change to the folder with the script and run it from your activated Anaconda Prompt:  
+```
+C:
 cd path/to/script/folder
 python Landslide_DEM_3D_Displacement_v1_.py
 ```
