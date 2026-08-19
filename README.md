@@ -23,13 +23,16 @@ Multi-band GeoTIFF Output: Packages results into a single, clean 4-band raster c
 Geospatial Python environments can be notoriously difficult due to dependency conflicts between GDAL and standard OpenCV GUI libraries. Follow these steps exactly to build a clean, headless Conda environment:
 Open your Anaconda Prompt.  
 Create the environment and install GDAL and NumPy via conda-forge:  
-```conda create --name dem_tracking -c conda-forge python=3.9 gdal numpy -y
+```
+conda create --name dem_tracking -c conda-forge python=3.9 gdal numpy -y
 ```
 Activate the environment:  
-```conda activate dem_tracking
+```
+conda activate dem_tracking
 ```
 Install the headless version of OpenCV using pip (this prevents .dll GUI conflicts with GDAL):  
-```python -m pip install opencv-python-headless
+```
+python -m pip install opencv-python-headless
 ```
 ## Usage
 Open the dem_3d_tracker.py script in your preferred text editor or IDE.  
