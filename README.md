@@ -21,13 +21,13 @@ Smart Filtering: Drops anomalous matches that exceed the expected maximum displa
 Multi-band GeoTIFF Output: Packages results into a single, clean 4-band raster containing Magnitude, Scaled Rate (m/yr or m/day), Azimuth, and Correlation Coefficient.  
 ## Installation & Environment Setup
 Geospatial Python environments can be notoriously difficult due to dependency conflicts between GDAL and standard OpenCV GUI libraries. Follow these steps exactly to build a clean, headless Conda environment:
-	Open your Anaconda Prompt.  
-	Create the environment and install GDAL and NumPy via conda-forge:  
-`conda create --name dem_tracking -c conda-forge python=3.9 gdal numpy -y  
-	Activate the environment:  
-`conda activate dem_tracking  
-	Install the headless version of OpenCV using pip (this prevents .dll GUI conflicts with GDAL):  
-`python -m pip install opencv-python-headless  
+Open your Anaconda Prompt.  
+Create the environment and install GDAL and NumPy via conda-forge:  
+`conda create --name dem_tracking -c conda-forge python=3.9 gdal numpy -y``
+Activate the environment:  
+`conda activate dem_tracking``
+Install the headless version of OpenCV using pip (this prevents .dll GUI conflicts with GDAL):  
+`python -m pip install opencv-python-headless``
 ## Usage
 Open the dem_3d_tracker.py script in your preferred text editor or IDE.  
 Modify the USER INPUTS block at the top of the script:  
@@ -38,9 +38,10 @@ GRID_SPACING_M: Your desired output resolution (e.g., 4.0 for a 4-meter grid).
 MIN_AZIMUTH & MAX_AZIMUTH: Limits valid results to a specific flow direction wedge (use 0 and 360 for no limit).  
 RATE_UNIT: Set to "m/year" or "m/day".  
 Save the script and run it from your activated Anaconda Prompt:  
-`C: (change to the drive with the script)  
-`cd path/to/script/folder  
-`python Landslide_DEM_3D_Displacement_v1_.py  
+```C: (change to the drive with the script)
+cd path/to/script/folder
+python Landslide_DEM_3D_Displacement_v1_.py
+```
 ## Outputs
 The script will generate several files in your designated output directory:  
 displacement_multiband_*.tif: A 4-band composite ideal for GIS visualization.  
