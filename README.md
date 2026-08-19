@@ -9,16 +9,16 @@ Traditional pixel-tracking tools (like ImGRAFT or pycorr_iceflow) rely on optica
 This tool solves that problem by shifting from 2D optical feature tracking to 3D topographic tracking. By calculating cross-correlation on DEM-derived topography (Slope) rather than raw imagery, the algorithm tracks physical landforms (scarps, blocks, and lobes) instead of ephemeral visual features. It then extracts the vertical elevation change to calculate a true 3D displacement vector.  
 ## How It Works (The Algorithm)
 This script is a stand-alone Python tool that leverages GDAL and OpenCV to calculate 3D displacement.  
-	In-Memory Alignment (gdal.Warp): The script dynamically calculates the intersecting bounding box of the two input DEMs and warps them into a perfectly aligned, overlapping grid in your system's RAM.  
-	Derivative Generation (gdal.DEMProcessing): It generates topographic Slope derivatives for both DEMs on the fly. Slope is used because it excellently highlights geomorphological tracking targets.  
-	Horizontal Tracking (cv2.matchTemplate): The script moves a template "chip" from the DEM 1 slope derivative across a larger search window in the DEM 2 slope derivative. It uses Normalized Cross-Correlation (TM_CCOEFF_NORMED) to find the sub-region with the highest structural match.  
-	Vertical Displacement (Z-Shift): Once the horizontal shift (dx, dy) is found, the script extracts the elevation of the starting pixel on DEM 1 and the elevation of the matched ending pixel on DEM 2 to calculate the vertical displacement (dz).  
-	Vector Math & Filtering: The total 3D magnitude is calculated (√(dx^2+dy^2+dz^2 )). Vectors are strictly filtered by a user-defined azimuth wedge (flow direction) and a maximum physical displacement limit to remove noisy edge-snapping artifacts.  
+In-Memory Alignment (gdal.Warp): The script dynamically calculates the intersecting bounding box of the two input DEMs and warps them into a perfectly aligned, overlapping grid in your system's RAM.  
+Derivative Generation (gdal.DEMProcessing): It generates topographic Slope derivatives for both DEMs on the fly. Slope is used because it excellently highlights geomorphological tracking targets.  
+Horizontal Tracking (cv2.matchTemplate): The script moves a template "chip" from the DEM 1 slope derivative across a larger search window in the DEM 2 slope derivative. It uses Normalized Cross-Correlation (TM_CCOEFF_NORMED) to find the sub-region with the highest structural match.  
+Vertical Displacement (Z-Shift): Once the horizontal shift (dx, dy) is found, the script extracts the elevation of the starting pixel on DEM 1 and the elevation of the matched ending pixel on DEM 2 to calculate the vertical displacement (dz).  
+Vector Math & Filtering: The total 3D magnitude is calculated (√(dx^2+dy^2+dz^2 )). Vectors are strictly filtered by a user-defined azimuth wedge (flow direction) and a maximum physical displacement limit to remove noisy edge-snapping artifacts.  
 ## Features
-	Resolution Independence: Automatically downsamples the dense tracking calculations into a user-defined output grid spacing (e.g., 0.5m input DEMs output to a clean 4m velocity grid).  
-	Automated Chip Sizing: Can automatically calculate the optimal OpenCV search window size based on the DEM resolution and your maximum expected physical displacement.  
-	Smart Filtering: Drops anomalous matches that exceed the expected maximum displacement in any axis, and filters out vectors flowing outside a specified azimuth range.  
-	Multi-band GeoTIFF Output: Packages results into a single, clean 4-band raster containing Magnitude, Scaled Rate (m/yr or m/day), Azimuth, and Correlation Coefficient.  
+Resolution Independence: Automatically downsamples the dense tracking calculations into a user-defined output grid spacing (e.g., 0.5m input DEMs output to a clean 4m velocity grid).  
+Automated Chip Sizing: Can automatically calculate the optimal OpenCV search window size based on the DEM resolution and your maximum expected physical displacement.  
+Smart Filtering: Drops anomalous matches that exceed the expected maximum displacement in any axis, and filters out vectors flowing outside a specified azimuth range.  
+Multi-band GeoTIFF Output: Packages results into a single, clean 4-band raster containing Magnitude, Scaled Rate (m/yr or m/day), Azimuth, and Correlation Coefficient.  
 ## Installation & Environment Setup
 Geospatial Python environments can be notoriously difficult due to dependency conflicts between GDAL and standard OpenCV GUI libraries. Follow these steps exactly to build a clean, headless Conda environment:
 	Open your Anaconda Prompt.  
